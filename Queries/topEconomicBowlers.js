@@ -6,7 +6,7 @@ function topEconomicBowlers(){
     var matches2015 = [];      
     var recordBowlersObj = {};
 
-    var topTenBowlers = economyBowlersArr.slice(0, 11);
+    var topTenBowlersArr = [];
     var topTenBowlersJSON = [];
     var economicBowlers = {};
     var economyBowlersArr = [];
@@ -34,26 +34,28 @@ function topEconomicBowlers(){
         }
     });
 
-    for(var bow in recordBowlersObj){
+    for(var bowler in recordBowlersObj){
         var arr = [];
-        let economyRate = (recordBowlersObj[bow]["runs"] * 6) / (recordBowlersObj[bow]["balls"]);
-        arr.push(bow);
+        let economyRate = (recordBowlersObj[bowler]["runs"] * 6) / (recordBowlersObj[bowler]["balls"]);
+        arr.push(bowler);
         arr.push(economyRate);
         economyBowlersArr.push(arr);
     }
 
+    // Sort the array based on 'economy rate'.
     economyBowlersArr.sort((a,b) => a[1]-b[1] );
 
-    
+    topTenBowlersArr = economyBowlersArr.slice(0, 11);
 
-    topTenBowlers.map(item => {
-        economicBowlers[item[0]] = item[1];
+    topTenBowlersArr.map(bowler => {
+        economicBowlers[bowler[0]] = bowler[1];
     })
 
     for(var obj in economicBowlers){
         topTenBowlersJSON.push({'name': obj, 'y':economicBowlers[obj] });
     }
 
+    // Convert the array of objects into a JSON file.
     const fs = require('fs');
     jsonData = JSON.stringify(topTenBowlersJSON);
     fs.writeFile('../queried-JSON-files/topEconomicBowlers.json', jsonData, (err) => {

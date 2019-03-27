@@ -4,28 +4,27 @@ function matchesWonAllTeams(){
     var matchesWonAllTeamsObj = {};
     var matchesWonAllTeamsArr = [];
 
-    for(var i=0; i<matches.length; i++){
-        if(matches[i]["winner"] !== ""){
-            if(matchesWonAllTeamsObj.hasOwnProperty(matches[i]["winner"])){
-                matchesWonAllTeamsObj[matches[i]["winner"]] += 1;
+    matches.map(match => {
+        if(match["winner"] !== ""){
+            if(matchesWonAllTeamsObj.hasOwnProperty(match["winner"])){
+                matchesWonAllTeamsObj[match["winner"]] += 1;
             }
             else{
-                matchesWonAllTeamsObj[matches[i]["winner"]] = 1;
+                matchesWonAllTeamsObj[match["winner"]] = 1;
             }
-        }   
-    }
-
-    const fs = require('fs');
-    var jsonData = JSON.stringify(matchesWonAllTeamsObj);
-    fs.writeFile('../queried-JSON-files/matchesWonAllTeams.json', jsonData, (err) => {
-        if(err) throw err;
+        }
     });
     
-    for(let ele in matchesWonAllTeamsObj){
-        matchesWonAllTeamsArr.push({'team':ele, 'matches-won':matchesWonAllTeamsObj[ele]});
+    // For Highcharts, convert this data into an array of objects, 
+    // in the form [{name: 'CSK', y: 79}, {}, ...]
+    for(let team in matchesWonAllTeamsObj){
+        matchesWonAllTeamsArr.push({'name':team, 'y':matchesWonAllTeamsObj[team]});
     }
+
+    // Convert the array of objects into a JSON file.
+    const fs = require('fs');
     jsonData = JSON.stringify(matchesWonAllTeamsArr);
-    fs.writeFile('../queried-JSON-files/JSON-Highcharts/matchesWonAllTeams.json', jsonData, (err) => {
+    fs.writeFile('../queried-JSON-files/matchesWonAllTeams.json', jsonData, (err) => {
         if(err) throw err;
     });
 }

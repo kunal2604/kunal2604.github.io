@@ -1,45 +1,56 @@
 function matchesWonAllTeams(){
     
-    // Store the json files into variables:
+    // Store the json files into variables.
     var matches = require('../JSON-files/matches.json');
     var deliveries = require('../JSON-files/deliveries.json');
 
-    // Store matches in the year 2016 in a seperate object:
-    var matchesIn2016 = [];
-    for(var i=0; i<matches.length; i++){
-        if(matches[i]["season"] === 2016){
-            matchesIn2016.push(matches[i]);
+    // Store 'Match IDs' of 2016 matches.
+    var matches2016ID = [];
+    matches.map(match => {
+        if(match["season"] === 2016){
+            matches2016ID.push(match["id"]);
         }
-    }
+    });
 
-    var extraRunsConceded = {};
-    for(var i=0; i<matchesIn2016.length; i++){
-        var id = matchesIn2016[i]["id"];
-        
-        for(var j=0; j<deliveries.length; j++){
-            
-            if(deliveries[j]["match_id"] == id){
-                if(extraRunsConceded.hasOwnProperty(deliveries[j]["bowling_team"])){
-                    extraRunsConceded[deliveries[j]["bowling_team"]] += parseInt(deliveries[j]["extra_runs"]);
+    // Store extra runs conceded by each team in an object of form {"team-name": extras}.
+    var extraRunsConcededObj = {};
+    matches2016ID.map(id => {
+        deliveries.map(del => {
+            if(del["match_id"] == id){
+                if(extraRunsConcededObj.hasOwnProperty(del["bowling_team"])){
+                    extraRunsConcededObj[del["bowling_team"]] += parseInt(del["extra_runs"]);
                 }
                 else{
-                    extraRunsConceded[deliveries[j]["bowling_team"]] = parseInt(deliveries[j]["extra_runs"]);
+                    extraRunsConcededObj[del["bowling_team"]] = parseInt(del["extra_runs"]);
                 }
             }
-        }
+        });
+    });
+
+    var sortedExtraRunsConceded = [];
+    for(let team in extraRunsConcededObj){
+        let tempArr = [];
+        tempArr.push(team);
+        tempArr.push(extraRunsConcededObj[team]);
+        sortedExtraRunsConceded.push(tempArr);
     }
 
+    // Sort the 2D Array according to number of extras.
+    sortedExtraRunsConceded.sort((a,b) => b[1] - a[1]);
+    
+    // For Highcharts, store the data as an 'Array of Objects', in the form [{name: 'team-name' , y: extras}, {}, {}, ...]
     var extraRunsConcededArr = [];
-    for(let ele in extraRunsConceded){
-        extraRunsConcededArr.push({'name':ele, 'y':extraRunsConceded[ele]});
-    }
 
+    sortedExtraRunsConceded.map(item => {
+        extraRunsConcededArr.push({'name': item[0], 'y': item[1]});
+    });
+
+    // Convert the array of objects into a JSON file.
     const fs = require('fs');
     jsonData = JSON.stringify(extraRunsConcededArr);
     fs.writeFile('../queried-JSON-files/extraRunsConceded.json', jsonData, (err) => {
         if(err) throw err;
     });
-
 }
 
 matchesWonAllTeams();
