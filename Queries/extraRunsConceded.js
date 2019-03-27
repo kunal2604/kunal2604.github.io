@@ -1,20 +1,20 @@
-function matchesWonAllTeams(){
+function matchesWonAllTeams(yy){
     
     // Store the json files into variables.
     var matches = require('../JSON-files/matches.json');
     var deliveries = require('../JSON-files/deliveries.json');
 
-    // Store 'Match IDs' of 2016 matches.
-    var matches2016ID = [];
+    // Store 'Match IDs' of matches played in the year 'yy' (2016).
+    var matchesInYearID = [];
     matches.map(match => {
-        if(match["season"] === 2016){
-            matches2016ID.push(match["id"]);
+        if(match["season"] === yy){
+            matchesInYearID.push(match["id"]);
         }
     });
 
     // Store extra runs conceded by each team in an object of form {"team-name": extras}.
     var extraRunsConcededObj = {};
-    matches2016ID.map(id => {
+    matchesInYearID.map(id => {
         deliveries.map(del => {
             if(del["match_id"] == id){
                 if(extraRunsConcededObj.hasOwnProperty(del["bowling_team"])){
@@ -53,4 +53,4 @@ function matchesWonAllTeams(){
     });
 }
 
-matchesWonAllTeams();
+matchesWonAllTeams(2016);
