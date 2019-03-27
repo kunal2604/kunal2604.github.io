@@ -29,13 +29,10 @@ function matchesWonAllTeams(){
         }
     }
 
-    //console.log(extraRunsConceded);
-
     var extraRunsConcededArr = [];
     for(let ele in extraRunsConceded){
         extraRunsConcededArr.push({'name':ele, 'y':extraRunsConceded[ele]});
     }
-    //console.log(extraRunsConcededArr);
 
     const fs = require('fs');
     jsonData = JSON.stringify(extraRunsConcededArr);

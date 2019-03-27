@@ -2,11 +2,8 @@
 fetch('queried-JSON-files/topEconomicBowlers.json').then((response) => response.json()).then(data => {
     
     var jsondata = data;
-    //console.log(jsondata);
     PlotChart4(jsondata);
 })
-
-
 
 // Create the chart
 function PlotChart4(jsonObj){
@@ -43,11 +40,11 @@ function PlotChart4(jsonObj){
 
         tooltip: {
             headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b>'
         },
 
         "series": [{
-            "name": "Matches",
+            "name": "Economy Rate",
             "colorByPoint": true,
             "data": jsonObj
         }]

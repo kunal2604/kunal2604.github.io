@@ -1,9 +1,8 @@
 function matchesPerYear(){
-    // matches is an array of objects
     var matches = require('../JSON-files/matches.json');
     
-    // empty object which stores the result
     var matchesPerYearObj = {};
+    var matchesPerYearArr = [];
 
     for(var i=0; i<matches.length; i++){
         if(matchesPerYearObj.hasOwnProperty(matches[i].season)){
@@ -13,15 +12,11 @@ function matchesPerYear(){
             matchesPerYearObj[matches[i]["season"]] = 1;
         }
     }
-    console.log(matchesPerYearObj);
 
-
-
-    var matchesPerYearArr = [];
+    
     for(let ele in matchesPerYearObj){
         matchesPerYearArr.push({'name':ele, 'y':matchesPerYearObj[ele]});
     }
-    console.log(matchesPerYearArr);
 
     const fs = require('fs');    
     var jsonData = JSON.stringify(matchesPerYearArr);

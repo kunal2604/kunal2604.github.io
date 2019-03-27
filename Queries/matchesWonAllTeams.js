@@ -1,8 +1,8 @@
 function matchesWonAllTeams(){
-    
     var matches = require('../JSON-files/matches.json');
-
+    
     var matchesWonAllTeamsObj = {};
+    var matchesWonAllTeamsArr = [];
 
     for(var i=0; i<matches.length; i++){
         if(matches[i]["winner"] !== ""){
@@ -12,8 +12,7 @@ function matchesWonAllTeams(){
             else{
                 matchesWonAllTeamsObj[matches[i]["winner"]] = 1;
             }
-        }
-        
+        }   
     }
 
     const fs = require('fs');
@@ -21,8 +20,7 @@ function matchesWonAllTeams(){
     fs.writeFile('../queried-JSON-files/matchesWonAllTeams.json', jsonData, (err) => {
         if(err) throw err;
     });
-
-    var matchesWonAllTeamsArr = [];
+    
     for(let ele in matchesWonAllTeamsObj){
         matchesWonAllTeamsArr.push({'team':ele, 'matches-won':matchesWonAllTeamsObj[ele]});
     }
@@ -30,8 +28,6 @@ function matchesWonAllTeams(){
     fs.writeFile('../queried-JSON-files/JSON-Highcharts/matchesWonAllTeams.json', jsonData, (err) => {
         if(err) throw err;
     });
-
-
 }
 
 matchesWonAllTeams();

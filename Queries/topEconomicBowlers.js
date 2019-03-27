@@ -1,13 +1,15 @@
 
 function topEconomicBowlers(){
- 
-    // Store the json files into variables:
     var matches = require('../JSON-files/matches.json');
     var deliveries = require('../JSON-files/deliveries.json');
 
-
     var matches2015 = [];      
     var recordBowlersObj = {};
+
+    var topTenBowlers = economyBowlersArr.slice(0, 11);
+    var topTenBowlersJSON = [];
+    var economicBowlers = {};
+    var economyBowlersArr = [];
 
 
     // Store matches in the year 2015 in a seperate object:
@@ -32,8 +34,6 @@ function topEconomicBowlers(){
         }
     });
 
-    var economyBowlersArr = [];
-
     for(var bow in recordBowlersObj){
         var arr = [];
         let economyRate = (recordBowlersObj[bow]["runs"] * 6) / (recordBowlersObj[bow]["balls"]);
@@ -44,21 +44,15 @@ function topEconomicBowlers(){
 
     economyBowlersArr.sort((a,b) => a[1]-b[1] );
 
-    var topTenBowlers = economyBowlersArr.slice(0, 11);
     
-    var topTenBowlersJSON = [];
-    var economicBowlers = {};
 
     topTenBowlers.map(item => {
         economicBowlers[item[0]] = item[1];
     })
 
-    //console.log(economicBowlers);
     for(var obj in economicBowlers){
         topTenBowlersJSON.push({'name': obj, 'y':economicBowlers[obj] });
     }
-
-    //console.log(topTenBowlersJSON);
 
     const fs = require('fs');
     jsonData = JSON.stringify(topTenBowlersJSON);
@@ -66,6 +60,7 @@ function topEconomicBowlers(){
         if(err) throw err;
     });
 }
+
 topEconomicBowlers();
 
 

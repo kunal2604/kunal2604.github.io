@@ -2,11 +2,8 @@
 fetch('queried-JSON-files/matchesPerYear.json').then((response) => response.json()).then(data => {
     
     var jsondata = data;
-    //console.log(jsondata);
     PlotChart(jsondata);
 })
-
-
 
 // Create the chart
 function PlotChart(jsonObj){
