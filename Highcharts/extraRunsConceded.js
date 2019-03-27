@@ -1,8 +1,6 @@
 
 fetch('queried-JSON-files/extraRunsConceded.json').then((response) => response.json()).then(data => {
-    
     var jsondata = data;
-    //console.log(jsondata);
     PlotChart3(jsondata);
 })
 
@@ -16,7 +14,7 @@ Highcharts.chart('container3', {
         type: 'column'
     },
     title: {
-        text: 'Extra runs conceded by teams in 2016 season'
+        text: 'Extra Runs Conceded in 2016 season'
     },
     
     xAxis: {

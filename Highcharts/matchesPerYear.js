@@ -1,6 +1,5 @@
 
 fetch('queried-JSON-files/matchesPerYear.json').then((response) => response.json()).then(data => {
-    
     var jsondata = data;
     PlotChart(jsondata);
 })
@@ -13,7 +12,7 @@ function PlotChart(jsonObj){
             type: 'column'
         },
         title: {
-            text: 'Matches played per year'
+            text: 'Matches Played per Year'
         },
         
         xAxis: {
@@ -21,7 +20,7 @@ function PlotChart(jsonObj){
         },
         yAxis: {
             title: {
-                text: 'Number of matches played'
+                text: 'Number of Matches Played'
             }
 
         },
