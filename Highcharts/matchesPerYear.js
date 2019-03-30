@@ -1,4 +1,3 @@
-
 fetch('queried-JSON-files/matchesPerYear.json').then((response) => response.json()).then(data => {
     var jsondata = data;
     PlotChart(jsondata);
@@ -6,7 +5,6 @@ fetch('queried-JSON-files/matchesPerYear.json').then((response) => response.json
 
 // Create the chart
 function PlotChart(jsonObj){
-
     Highcharts.chart('container', {
         chart: {
             type: 'column'
@@ -47,6 +45,5 @@ function PlotChart(jsonObj){
             "colorByPoint": true,
             "data": jsonObj
         }]
-        
     });
 }

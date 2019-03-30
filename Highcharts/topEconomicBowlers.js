@@ -1,4 +1,3 @@
-
 fetch('queried-JSON-files/topEconomicBowlers.json').then((response) => response.json()).then(data => {
     var jsondata = data;
     PlotChart4(jsondata);
@@ -47,6 +46,5 @@ function PlotChart4(jsonObj){
             "colorByPoint": true,
             "data": jsonObj
         }]
-        
     });
 }
