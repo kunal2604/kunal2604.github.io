@@ -36,7 +36,7 @@ function topEconomicBowlers(){
 
     for(var bowler in recordBowlersObj){
         var arr = [];
-        let economyRate = (recordBowlersObj[bowler]["runs"] * 6) / (recordBowlersObj[bowler]["balls"]);
+        let economyRate = (recordBowlersObj[bowler]["runs"] * 6.0) / (recordBowlersObj[bowler]["balls"]);
         arr.push(bowler);
         arr.push(economyRate);
         economyBowlersArr.push(arr);
