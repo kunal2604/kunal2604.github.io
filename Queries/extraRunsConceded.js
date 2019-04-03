@@ -13,6 +13,22 @@ function extraRunsConceded(yy){
 
     // Store extra runs conceded by each team in an object of form {"team-name": extras}.
     var extraRunsConcededObj = {};
+<<<<<<< HEAD
+=======
+
+    deliveries.map(x => {
+        if(matchesObj.hasOwnProperty(x["match_id"])){
+            if(extraRunsConcededObj.hasOwnProperty(x["bowling_team"])){
+                extraRunsConcededObj[x["bowling_team"]] += parseInt(x["extra_runs"]);   
+            }
+            else{
+                extraRunsConcededObj[x["bowling_team"]] = parseInt(x["extra_runs"]);   
+            }
+        }
+    });        
+  
+   console.log(extraRunsConcededObj);
+>>>>>>> 442f0f1329aa9509bec2a83f28ca2e84b2264082
 
     deliveries.map(x => {
         if(matchesObj.hasOwnProperty(x["match_id"])){
@@ -26,6 +42,8 @@ function extraRunsConceded(yy){
     });        
   
     // Store the data as 'Array of Arrays', --> [ ['Mumbai Indians',108],['Delhi D',106], [], ... ]
+   
+   
     var sortedExtraRunsConceded = [];
     for(let team in extraRunsConcededObj){
         let tempArr = [];

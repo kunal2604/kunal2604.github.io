@@ -63,3 +63,4 @@ function PlotChart2(jsonObj){
         series: matchesWonArr
     });
 }
+
