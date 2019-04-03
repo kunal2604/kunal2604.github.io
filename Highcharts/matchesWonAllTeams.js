@@ -4,11 +4,7 @@ fetch('queried-JSON-files/matchesWonAllTeams.json').then((response) => response.
 })
 
 function PlotChart2(jsonObj){
-<<<<<<< HEAD
     // Store the seasons and teams in respective arrays.
-=======
-    // Store the seaons in an array.
->>>>>>> a33fb1d4cfa5364fc2addfc0a982b62dcaf1cc13
     var seasonsIPL = [];
     var teamsIPL = [];
     
@@ -52,11 +48,8 @@ function PlotChart2(jsonObj){
         yAxis: {
             min: 0,
             title: {
-<<<<<<< HEAD
-                text: ''
-=======
                 text: 'Matches won by each team every year'
->>>>>>> a33fb1d4cfa5364fc2addfc0a982b62dcaf1cc13
+
             }
         },
         legend: {
