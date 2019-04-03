@@ -1,55 +1,52 @@
-function extraRunsConceded(yy){
-    
-    // Store the json files into variables.
-    var matches = require('../JSON-files/matches.json');
-    var deliveries = require('../JSON-files/deliveries.json');
+fetch('queried-JSON-files/extraRunsConceded.json').then((response) => response.json()).then(data => {
+    var jsondata = data;
+    PlotChart3(jsondata);
+})
 
-    var matchesObj = {};
-    matches.map(match => {
-        if(match["season"] === yy){
-            matchesObj[match["id"]] = match["id"];
-        }
-    });
 
-    // Store extra runs conceded by each team in an object of form {"team-name": extras}.
-    var extraRunsConcededObj = {};
 
-    deliveries.map(x => {
-        if(matchesObj.hasOwnProperty(x["match_id"])){
-            if(extraRunsConcededObj.hasOwnProperty(x["bowling_team"])){
-                extraRunsConcededObj[x["bowling_team"]] += parseInt(x["extra_runs"]);   
+// Create the chart
+function PlotChart3(jsonObj){
+
+    Highcharts.chart('container3', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Extra Runs Conceded in 2016 season'
+        },
+        
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Extras'
             }
-            else{
-                extraRunsConcededObj[x["bowling_team"]] = parseInt(x["extra_runs"]);   
+
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.0f}'
+                }
             }
-        }
-    });        
-  
-    // Store the data as 'Array of Arrays', --> [ ['Mumbai Indians',108],['Delhi D',106], [], ... ]
-    var sortedExtraRunsConceded = [];
-    for(let team in extraRunsConcededObj){
-        let tempArr = [];
-        tempArr.push(team);
-        tempArr.push(extraRunsConcededObj[team]);
-        sortedExtraRunsConceded.push(tempArr);
-    }
+        },
 
-    // Sort the 2D Array according to number of extras.
-    sortedExtraRunsConceded.sort((a,b) => b[1] - a[1]);
-    
-    // For Highcharts, store the data as an 'Array of Objects', in the form [{name: 'team-name' , y: extras}, {}, {}, ...]
-    var extraRunsConcededArr = [];
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b>'
+        },
 
-    sortedExtraRunsConceded.map(item => {
-        extraRunsConcededArr.push({'name': item[0], 'y': item[1]});
-    });
-
-    // Convert the array of objects into a JSON file.
-    const fs = require('fs');
-    jsonData = JSON.stringify(extraRunsConcededArr);
-    fs.writeFile('../queried-JSON-files/extraRunsConceded.json', jsonData, (err) => {
-        if(err) throw err;
+        "series": [{
+            "name": "Extras",
+            "colorByPoint": true,
+            "data": jsonObj
+        }] 
     });
 }
-
-extraRunsConceded(2016);
