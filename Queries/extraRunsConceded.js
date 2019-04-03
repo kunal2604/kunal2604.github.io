@@ -1,35 +1,35 @@
-function matchesWonAllTeams(yy){
+function extraRunsConceded(yy){
     
     // Store the json files into variables.
     var matches = require('../JSON-files/matches.json');
     var deliveries = require('../JSON-files/deliveries.json');
 
-    // Store 'Match IDs' of matches played in the year 'yy' (2016).
-    var matchesInYearID = [];
+    var matchesObj = {};
     matches.map(match => {
         if(match["season"] === yy){
-            matchesInYearID.push(match["id"]);
+            matchesObj[match["id"]] = match["id"];
         }
     });
 
     // Store extra runs conceded by each team in an object of form {"team-name": extras}.
     var extraRunsConcededObj = {};
-    matchesInYearID.map(id => {
-        deliveries.map(del => {
-            if(del["match_id"] == id){
-                if(extraRunsConcededObj.hasOwnProperty(del["bowling_team"])){
-                    extraRunsConcededObj[del["bowling_team"]] += parseInt(del["extra_runs"]);
-                }
-                else{
-                    extraRunsConcededObj[del["bowling_team"]] = parseInt(del["extra_runs"]);
-                }
-            }
-        });
-    });
 
-    console.log(extraRunsConcededObj);
+    deliveries.map(x => {
+        if(matchesObj.hasOwnProperty(x["match_id"])){
+            if(extraRunsConcededObj.hasOwnProperty(x["bowling_team"])){
+                extraRunsConcededObj[x["bowling_team"]] += parseInt(x["extra_runs"]);   
+            }
+            else{
+                extraRunsConcededObj[x["bowling_team"]] = parseInt(x["extra_runs"]);   
+            }
+        }
+    });        
+  
+   console.log(extraRunsConcededObj);
 
     // Store the data as 'Array of Arrays', --> [ ['Mumbai Indians',108],['Delhi D',106], [], ... ]
+   
+   
     var sortedExtraRunsConceded = [];
     for(let team in extraRunsConcededObj){
         let tempArr = [];
@@ -56,4 +56,4 @@ function matchesWonAllTeams(yy){
     });
 }
 
-matchesWonAllTeams(2016);
+extraRunsConceded(2016);
